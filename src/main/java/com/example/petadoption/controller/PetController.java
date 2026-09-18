@@ -24,5 +24,18 @@ public class PetController {
         model.addAttribute("pets", petRepository.listarDisponibles());
         return "pets/listado";
     }
+    @GetMapping("/editar")
+    public String editar(@RequestParam("id") Integer id, Model model) {
+        Pet pet = petRepository.buscarPorId(id);
+        model.addAttribute("pet", pet);
+        return "pets/editar";
+    }
+
+    @PostMapping("/actualizar")
+    public String actualizar(Pet pet) {
+        petRepository.actualizarDatosBasicos(
+                pet.getPetId(), pet.getName(), pet.getBreed(), pet.getAge(), pet.getSex(), pet.getSize());
+        return "redirect:/pets";
+    }
 
 }
